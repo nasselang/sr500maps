@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_a5cb6ac7c919e278885e0e9e825e4c5f {
+                #map_5395bb864b04dc688e5ede191713e60c {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -54,16 +54,16 @@
 <body>
     
     
-            <div class="folium-map" id="map_a5cb6ac7c919e278885e0e9e825e4c5f" ></div>
+            <div class="folium-map" id="map_5395bb864b04dc688e5ede191713e60c" ></div>
         
 </body>
 <script>
     
     
-            var map_a5cb6ac7c919e278885e0e9e825e4c5f = L.map(
-                "map_a5cb6ac7c919e278885e0e9e825e4c5f",
+            var map_5395bb864b04dc688e5ede191713e60c = L.map(
+                "map_5395bb864b04dc688e5ede191713e60c",
                 {
-                    center: [59.900115347, 10.830982746],
+                    center: [59.900412892, 10.832315843],
                     crs: L.CRS.EPSG3857,
                     ...{
   "zoom": 13,
@@ -78,7 +78,7 @@
 
         
     
-            var tile_layer_bf8e7ca8edc6a5b8828780f7dca2ebe0 = L.tileLayer(
+            var tile_layer_bf0bf38b1f435c60c77df8d864d5d59d = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -95,18 +95,18 @@
             );
         
     
-            tile_layer_bf8e7ca8edc6a5b8828780f7dca2ebe0.addTo(map_a5cb6ac7c919e278885e0e9e825e4c5f);
+            tile_layer_bf0bf38b1f435c60c77df8d864d5d59d.addTo(map_5395bb864b04dc688e5ede191713e60c);
         
     
-            var poly_line_afc61c3b187295e18e487f9a86606c09 = L.polyline(
-                [[59.90011835, 10.830979681], [59.900115347, 10.830982746]],
+            var poly_line_a9d0a2ebfc87e7c057eb27a2324eb356 = L.polyline(
+                [[59.900412892, 10.832315843]],
                 {"bubblingMouseEvents": true, "color": "#d62828", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#d62828", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 5}
-            ).addTo(map_a5cb6ac7c919e278885e0e9e825e4c5f);
+            ).addTo(map_5395bb864b04dc688e5ede191713e60c);
         
     
-            poly_line_afc61c3b187295e18e487f9a86606c09.bindTooltip(
+            poly_line_a9d0a2ebfc87e7c057eb27a2324eb356.bindTooltip(
                 `<div>
-                     2026-05-16T19-33-22Z
+                     2026-05-16T15-40-00Z
                  </div>`,
                 {
   "sticky": true,
@@ -114,14 +114,14 @@
             );
         
     
-            var marker_113f2e3752e5f3bfa981fc93ce093bb0 = L.marker(
-                [59.90011835, 10.830979681],
+            var marker_5f213bfa4706dc4aba6277aad453f185 = L.marker(
+                [59.900412892, 10.832315843],
                 {
 }
-            ).addTo(map_a5cb6ac7c919e278885e0e9e825e4c5f);
+            ).addTo(map_5395bb864b04dc688e5ede191713e60c);
         
     
-            var icon_929947bd952b4ab6187da57a46702ea3 = L.AwesomeMarkers.icon(
+            var icon_5d7485dac5986f3101c5ba05ecc7ad84 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "green",
   "iconColor": "white",
@@ -132,7 +132,7 @@
             );
         
     
-            marker_113f2e3752e5f3bfa981fc93ce093bb0.bindTooltip(
+            marker_5f213bfa4706dc4aba6277aad453f185.bindTooltip(
                 `<div>
                      Start
                  </div>`,
@@ -142,17 +142,17 @@
             );
         
     
-                marker_113f2e3752e5f3bfa981fc93ce093bb0.setIcon(icon_929947bd952b4ab6187da57a46702ea3);
+                marker_5f213bfa4706dc4aba6277aad453f185.setIcon(icon_5d7485dac5986f3101c5ba05ecc7ad84);
             
     
-            var marker_bd35a1ac23632b6b693bd66e1dc50928 = L.marker(
-                [59.900115347, 10.830982746],
+            var marker_6bed8c9ace236522b4a729732c4d6357 = L.marker(
+                [59.900412892, 10.832315843],
                 {
 }
-            ).addTo(map_a5cb6ac7c919e278885e0e9e825e4c5f);
+            ).addTo(map_5395bb864b04dc688e5ede191713e60c);
         
     
-            var icon_4dd1861a78da6138ce1197fec05de2d4 = L.AwesomeMarkers.icon(
+            var icon_1158f8af9210951ab15657c61f46ae22 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "white",
@@ -163,7 +163,7 @@
             );
         
     
-            marker_bd35a1ac23632b6b693bd66e1dc50928.bindTooltip(
+            marker_6bed8c9ace236522b4a729732c4d6357.bindTooltip(
                 `<div>
                      End
                  </div>`,
@@ -173,27 +173,27 @@
             );
         
     
-                marker_bd35a1ac23632b6b693bd66e1dc50928.setIcon(icon_4dd1861a78da6138ce1197fec05de2d4);
+                marker_6bed8c9ace236522b4a729732c4d6357.setIcon(icon_1158f8af9210951ab15657c61f46ae22);
             
     
-            var marker_faa50fbda07a0c4e40b2d6595382aff9 = L.marker(
-                [59.900115347, 10.830982746],
+            var marker_38f4e79d4f35dbefafa120fc01043aae = L.marker(
+                [59.900412892, 10.832315843],
                 {
 }
-            ).addTo(map_a5cb6ac7c919e278885e0e9e825e4c5f);
+            ).addTo(map_5395bb864b04dc688e5ede191713e60c);
         
     
-            var div_icon_f11dce4bfcae414a758b42de4a438d1e = L.divIcon({
-  "html": "\n    \u003cdiv style=\"font-family: sans-serif; font-size: 14px;\"\u003e\n      \u003cb\u003eTrip:\u003c/b\u003e 2026-05-16T19-33-22Z\u003cbr\u003e\n      \u003cb\u003eStart:\u003c/b\u003e 2026-05-16T19:33:22.000Z\u003cbr\u003e\n      \u003cb\u003eEnd:\u003c/b\u003e 2026-05-16T19:33:23.000Z\u003cbr\u003e\n      \u003cb\u003ePoints:\u003c/b\u003e 2\u003cbr\u003e\n      \u003cb\u003eDistance:\u003c/b\u003e 0.0 km\n    \u003c/div\u003e\n    ",
+            var div_icon_1f60ac236d9d03955314342756e76f3f = L.divIcon({
+  "html": "\n    \u003cdiv style=\"font-family: sans-serif; font-size: 14px;\"\u003e\n      \u003cb\u003eTrip:\u003c/b\u003e 2026-05-16T15-40-00Z\u003cbr\u003e\n      \u003cb\u003eStart:\u003c/b\u003e 2026-05-16T15:40:23.000Z\u003cbr\u003e\n      \u003cb\u003eEnd:\u003c/b\u003e 2026-05-16T15:40:23.000Z\u003cbr\u003e\n      \u003cb\u003ePoints:\u003c/b\u003e 1\u003cbr\u003e\n      \u003cb\u003eDistance:\u003c/b\u003e 0.0 km\n    \u003c/div\u003e\n    ",
   "className": "empty",
 });
         
     
-                marker_faa50fbda07a0c4e40b2d6595382aff9.setIcon(div_icon_f11dce4bfcae414a758b42de4a438d1e);
+                marker_38f4e79d4f35dbefafa120fc01043aae.setIcon(div_icon_1f60ac236d9d03955314342756e76f3f);
             
     
-            map_a5cb6ac7c919e278885e0e9e825e4c5f.fitBounds(
-                [[59.90011835, 10.830979681], [59.900115347, 10.830982746]],
+            map_5395bb864b04dc688e5ede191713e60c.fitBounds(
+                [[59.900412892, 10.832315843]],
                 {}
             );
         
