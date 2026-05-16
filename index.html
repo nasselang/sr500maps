@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SR500 Maps</title>
   <style>
+    :root {
+      color-scheme: dark;
+    }
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       margin: 0;
@@ -13,7 +16,7 @@
       color: #e5e7eb;
     }
     .card {
-      max-width: 760px;
+      max-width: 1080px;
       margin: 0 auto;
       background: #111827;
       border: 1px solid rgba(255,255,255,0.08);
@@ -23,24 +26,121 @@
     }
     a {
       color: #7dd3fc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
     }
     code {
       background: rgba(255,255,255,0.08);
       padding: 0.1rem 0.35rem;
       border-radius: 6px;
     }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.7rem 0.6rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      vertical-align: top;
+    }
+    th {
+      color: #cbd5e1;
+      font-weight: 600;
+    }
+    .toplinks {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1rem 0 0.5rem;
+    }
+    .muted {
+      color: #94a3b8;
+    }
   </style>
 </head>
 <body>
   <div class="card">
     <h1>SR500 Maps</h1>
-    <p>Dette er publiseringsrepoet for interaktive turkart fra SR500-prosjektet.</p>
-    <p>Når publiseringsflyten er på plass vil denne siden peke til:</p>
-    <ul>
-      <li><a href="./latest.html">Siste tur</a></li>
-      <li>historiske turer under <code>/trips/</code></li>
-    </ul>
-    <p>Status: grunnstruktur opprettet. Kartpublisering kommer i neste steg.</p>
+    <p>Publiserte interaktive turkart fra SR500-prosjektet.</p>
+    <div class="toplinks">
+      <a href="./latest">Åpne siste tur</a>
+      <a href="./latest.html">Åpne siste tur (.html)</a>
+    </div>
+    <p class="muted">Nyeste turer vises øverst.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Trip</th>
+          <th>Start</th>
+          <th>Slutt</th>
+          <th>Punkter</th>
+          <th>Distanse</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+              <td><a href="./trips/trip-2026-05-16T19-38-39Z.html">2026-05-16T19-38-39Z</a></td>
+              <td>2026-05-16 19:38 UTC</td>
+              <td>2026-05-16 19:38 UTC</td>
+              <td>2</td>
+              <td>0.0 km</td>
+            </tr>
+<tr>
+              <td><a href="./trips/trip-2026-05-16T19-33-22Z.html">2026-05-16T19-33-22Z</a></td>
+              <td>2026-05-16 19:33 UTC</td>
+              <td>2026-05-16 19:33 UTC</td>
+              <td>2</td>
+              <td>0.0 km</td>
+            </tr>
+<tr>
+              <td><a href="./trips/trip-2026-05-16T16-13-32Z.html">2026-05-16T16-13-32Z</a></td>
+              <td>2026-05-16 16:28 UTC</td>
+              <td>2026-05-16 16:28 UTC</td>
+              <td>2</td>
+              <td>0.0 km</td>
+            </tr>
+<tr>
+              <td><a href="./trips/trip-2026-05-16T16-13-31Z.html">2026-05-16T16-13-31Z</a></td>
+              <td>2026-05-16 16:13 UTC</td>
+              <td>2026-05-16 16:43 UTC</td>
+              <td>1773</td>
+              <td>10.002 km</td>
+            </tr>
+<tr>
+              <td><a href="./trips/trip-2026-05-16T15-40-00Z.html">2026-05-16T15-40-00Z</a></td>
+              <td>2026-05-16 15:40 UTC</td>
+              <td>2026-05-16 15:40 UTC</td>
+              <td>1</td>
+              <td>0.0 km</td>
+            </tr>
+<tr>
+              <td><a href="./trips/trip-2026-05-16T14-37-49Z.html">2026-05-16T14-37-49Z</a></td>
+              <td>2026-05-16 15:01 UTC</td>
+              <td>2026-05-16 15:01 UTC</td>
+              <td>1</td>
+              <td>0.0 km</td>
+            </tr>
+<tr>
+              <td><a href="./trips/trip-2026-05-16T14-37-21Z.html">2026-05-16T14-37-21Z</a></td>
+              <td>2026-05-16 14:37 UTC</td>
+              <td>2026-05-16 15:56 UTC</td>
+              <td>2976</td>
+              <td>0.533 km</td>
+            </tr>
+<tr>
+              <td><a href="./trips/trip-2026-05-16T11-56-51Z.html">2026-05-16T11-56-51Z</a></td>
+              <td>2026-05-16 11:56 UTC</td>
+              <td>2026-05-16 14:29 UTC</td>
+              <td>8683</td>
+              <td>9.858 km</td>
+            </tr>
+      </tbody>
+    </table>
   </div>
 </body>
 </html>
