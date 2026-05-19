@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="no">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SR500 / OpenClaw prosjektoversikt</title>
+  <title>SR500 / OpenClaw Project Overview</title>
   <style>
     :root {
       color-scheme: dark;
@@ -43,7 +43,7 @@
     .lead {
       font-size: 1.08rem;
       color: #dbe4ee;
-      max-width: 900px;
+      max-width: 920px;
     }
     .muted { color: var(--muted); }
     .grid {
@@ -204,142 +204,106 @@
 </head>
 <body>
   <div class="wrap">
-    <h1>SR500 / OpenClaw prosjektoversikt</h1>
+    <h1>SR500 / OpenClaw Project Overview</h1>
     <p class="lead">
-      Dette dokumentet samler hele SR500-oppsettet i én lesbar HTML-side: Raspberry Pi-en,
-      GPS-logikken, eksport- og kart-repoene, OpenClaw-agentene og hvordan delene henger sammen.
-      Det er ment som en menneskelig systemoversikt – ikke som kilde for rådata eller driftsscript.
+      This page is a compact overview of the whole SR500 setup: the Raspberry Pi runtime,
+      the GPS pipeline, the export and map repositories, the OpenClaw agents, and the logic that ties them together.
+      It is meant to be a human-readable system map, not the source of truth for raw data or operational scripts.
     </p>
     <p class="muted">
-      Prosjektet spenner over tre lag: <strong>innsamling på Pi</strong>, <strong>versjonerte eksport-/kartrepoer</strong>
-      og <strong>OpenClaw-agenter som leser og presenterer resultatet</strong>.
+      The system has three main layers: <strong>data collection on the Pi</strong>, <strong>versioned export/publishing repositories</strong>,
+      and <strong>OpenClaw agents that read and present the results</strong>.
     </p>
 
     <div class="grid">
       <section class="card">
-        <h3>Maskin</h3>
+        <h3>Machine</h3>
         <p><strong>Host:</strong> <code>SR500</code> / <code>sr500.lan</code><br>
-        <strong>Bruker:</strong> <code>johnny</code><br>
+        <strong>User:</strong> <code>johnny</code><br>
         <strong>OS:</strong> Debian 13 (arm64)<br>
-        <strong>GPS:</strong> u-blox 7 via <code>/dev/ttyACM0</code> og <code>gpsd</code></p>
+        <strong>GPS:</strong> u-blox 7 via <code>/dev/ttyACM0</code> and <code>gpsd</code></p>
       </section>
       <section class="card">
-        <h3>Operativ prosjektrot</h3>
+        <h3>Operational root</h3>
         <p><code>/home/johnny/mc-gps/</code></p>
-        <p class="muted">Her bor database, runtime-script, eksportkataloger og lokale repo-kloner på Pi-en.</p>
+        <p class="muted">This is where the database, runtime scripts, export folders, and local repo clones live on the Pi.</p>
       </section>
       <section class="card">
-        <h3>Publiserte flater</h3>
+        <h3>Published surfaces</h3>
         <p>
           <a href="https://github.com/nasselang/sr500exports">sr500exports</a><br>
           <a href="https://github.com/nasselang/sr500maps">sr500maps</a><br>
-          <a href="https://nasselang.github.io/sr500maps/">GitHub Pages-kart</a>
+          <a href="https://nasselang.github.io/sr500maps/">GitHub Pages maps</a>
         </p>
       </section>
     </div>
 
-    <h2>1. Konseptuell arkitektur</h2>
+    <h2>1. Conceptual architecture</h2>
     <div class="arch">
       <div class="arch-row">
         <div class="arch-box arch-box-gps">
-          <h3><span class="arch-icon">🏍️</span>Motorsykkel / GPS</h3>
-          <p>u-blox 7 leverer posisjon via <code>gpsd</code>. Dette er den fysiske kilden til hele datastrømmen.</p>
+          <h3><span class="arch-icon">🏍️</span>Motorcycle / GPS</h3>
+          <p>The u-blox 7 device provides positions through <code>gpsd</code>. This is the physical source of the entire data flow.</p>
         </div>
       </div>
       <div class="arch-arrow">↓</div>
       <div class="arch-row">
         <div class="arch-box arch-box-pi">
-          <h3><span class="arch-icon">🍓</span>Raspberry Pi «SR500»</h3>
-          <p><code>/home/johnny/mc-gps/</code> kjører logging, turbygging, eksport, kart-rendering, sync og database-prune.</p>
+          <h3><span class="arch-icon">🍓</span>Raspberry Pi “SR500”</h3>
+          <p><code>/home/johnny/mc-gps/</code> runs logging, trip building, export generation, map rendering, sync, and database pruning.</p>
         </div>
       </div>
       <div class="arch-arrow">↓</div>
       <div class="arch-split">
         <div class="arch-box arch-box-data">
           <h3><span class="arch-icon">📦</span><code>sr500exports</code></h3>
-          <p>Repoformat for <code>latest.json</code>, tur-sammendrag, GeoJSON og GPX. Dette er hovedflaten agenter leser fra.</p>
+          <p>Repository-format trip data: <code>latest.json</code>, summaries, GeoJSON, and GPX. This is the main read surface for agents.</p>
         </div>
         <div class="arch-merge">＋</div>
         <div class="arch-box arch-box-publish">
           <h3><span class="arch-icon">🗺️</span><code>sr500maps</code></h3>
-          <p>Publiserte HTML-kart og indeks. Dette er presentasjonslaget for interaktive kart.</p>
+          <p>Published HTML maps and index pages. This is the presentation layer for interactive trip maps.</p>
         </div>
       </div>
       <div class="arch-arrow">↓</div>
       <div class="arch-row">
         <div class="arch-box arch-box-publish">
           <h3><span class="arch-icon">☁️</span>GitHub / GitHub Pages</h3>
-          <p>Repoene pushes fra Pi-en. Kartrepoet serveres som statisk nettsted via GitHub Pages.</p>
+          <p>The Pi pushes both repositories. The map repository is served as a static site through GitHub Pages.</p>
         </div>
       </div>
       <div class="arch-arrow">↓</div>
       <div class="arch-row">
         <div class="arch-box arch-box-agent">
           <h3><span class="arch-icon">🤖</span>OpenClaw</h3>
-          <p>Hovedagenten og <code>trip-map-agent</code> leser repo-formatet, bruker minne og verktøy, og unngår direkte Pi-kobling for vanlige forespørsler.</p>
+          <p>The main agent and <code>trip-map-agent</code> read repository-format data, use memory and tools, and avoid direct Pi access for ordinary trip requests.</p>
         </div>
       </div>
       <div class="arch-arrow">↓</div>
       <div class="arch-row">
         <div class="arch-box arch-box-ui">
           <h3><span class="arch-icon">💬</span>Chat / Control UI</h3>
-          <p>Brukeren får svar som tekst, bilde, lenke eller HTML-avledet visning, avhengig av flate og behov.</p>
+          <p>The user receives text, images, links, or HTML-derived views depending on the surface and the request.</p>
         </div>
       </div>
     </div>
     <p>
-      Blokken over viser hovedideen i prosjektet: Pi-en gjør innsamling, prosessering og publisering,
-      mens OpenClaw leser fra stabile repo-/publiseringsflater og presenterer resultatet i chat eller UI.
+      The key idea is simple: the Pi does the collection, processing, and publishing;
+      OpenClaw reads from stable repository and publishing surfaces and presents the result in chat or UI.
     </p>
 
-    <h2>2. Hovedidé</h2>
-    <p>
-      Motorsykkelen har ikke en chat-agent direkte koblet til seg hele tiden. I stedet samler Pi-en inn GPS-data,
-      bygger turer, eksporterer dem til repo-format, og publiserer kart. OpenClaw leser deretter disse eksporterte,
-      versjonerte artefaktene i stedet for å være avhengig av å SSH-e inn i runtime-miljøet for vanlige forespørsler.
-    </p>
-
-    <div class="note ok">
-      <strong>Kjerneprinsipp:</strong> rå drift og logging skjer på Pi-en, mens OpenClaw-agentene helst leser fra
-      stabile repo-/eksportflater. Det gir færre koblinger, mindre skjørhet og enklere deling.
-    </div>
-
-    <h2>2. Komponentene</h2>
-    <div class="grid">
-      <section class="card">
-        <h3>Pi / runtime</h3>
-        <p>Samler GPS-punkter, lagrer SQLite-data, bygger turer, eksporterer filer og pusher til GitHub.</p>
-        <span class="pill">gpsd</span>
-        <span class="pill">SQLite</span>
-        <span class="pill">systemd --user</span>
-        <span class="pill">Python</span>
-      </section>
-      <section class="card">
-        <h3><code>sr500exports</code></h3>
-        <p>Datarepo for <code>latest.json</code>, tur-sammendrag, GeoJSON og GPX. Dette er den viktigste leseflaten for agenter.</p>
-      </section>
-      <section class="card">
-        <h3><code>sr500maps</code></h3>
-        <p>Publiseringsrepo for ferdigrendrede HTML-kart som serveres via GitHub Pages.</p>
-      </section>
-      <section class="card">
-        <h3>OpenClaw</h3>
-        <p>Leser data, svarer i chat og bruker spesialiserte agenter som <code>trip-map-agent</code> for kartforespørsler.</p>
-      </section>
-    </div>
-
-    <h2>3. Logikken bak hele flyten</h2>
+    <h2>2. End-to-end flow</h2>
     <div class="flow">
-      <div class="step"><strong>Steg 1:</strong> GPS-donglen leverer posisjon via <code>gpsd</code> på Pi-en.</div>
-      <div class="step"><strong>Steg 2:</strong> <code>gps_logger.py</code> skriver gyldige GPS-punkter til <code>gps.db</code>.</div>
-      <div class="step"><strong>Steg 3:</strong> <code>trip_builder.py</code> grupperer punktene til turer, avslutter tur ved lange gap eller langvarig lite bevegelse, og filtrerer bort støy.</div>
-      <div class="step"><strong>Steg 4:</strong> <code>export_gps.py</code> bygger repo-lesbare filer: <code>latest.json</code>, <code>summary.json</code>, <code>geojson</code> og <code>gpx</code>.</div>
-      <div class="step"><strong>Steg 5:</strong> <code>render_trip_html.py</code> og <code>render_maps_index.py</code> bygger publiserbare HTML-kart til <code>sr500maps</code>.</div>
-      <div class="step"><strong>Steg 6:</strong> <code>sync_exports.sh</code> og <code>sync_maps.sh</code> committer og pusher repoene når filer faktisk har endret seg.</div>
-      <div class="step"><strong>Steg 7:</strong> OpenClaw og <code>trip-map-agent</code> leser repo-formatet og kan svare med liste, bilde, HTML eller lenke.</div>
+      <div class="step"><strong>Step 1:</strong> The GPS device feeds positions into <code>gpsd</code> on the Pi.</div>
+      <div class="step"><strong>Step 2:</strong> <code>gps_logger.py</code> stores valid GPS points in <code>gps.db</code>.</div>
+      <div class="step"><strong>Step 3:</strong> <code>trip_builder.py</code> groups points into trips, splits trips at long gaps or long idle periods, and filters out drift-like noise.</div>
+      <div class="step"><strong>Step 4:</strong> <code>export_gps.py</code> generates repository-readable files: <code>latest.json</code>, trip summaries, GeoJSON, and GPX.</div>
+      <div class="step"><strong>Step 5:</strong> <code>render_trip_html.py</code> and <code>render_maps_index.py</code> build publishable HTML maps into <code>sr500maps</code>.</div>
+      <div class="step"><strong>Step 6:</strong> <code>sync_exports.sh</code> and <code>sync_maps.sh</code> commit and push changes when files have actually changed.</div>
+      <div class="step"><strong>Step 7:</strong> OpenClaw and <code>trip-map-agent</code> read the exported data and respond with lists, images, HTML, or published links.</div>
     </div>
 
-    <h2>4. Pi-en: filer, script og ansvar</h2>
+    <h2>3. Pi runtime</h2>
     <pre>/home/johnny/mc-gps/
 ├── config/
 │   └── trip-config.env
@@ -366,35 +330,34 @@
 
     <table>
       <thead>
-        <tr><th>Script</th><th>Rolle</th></tr>
+        <tr><th>Script</th><th>Role</th></tr>
       </thead>
       <tbody>
-        <tr><td><code>read_gps.py</code></td><td>Enkel verifisering av at <code>gpsd</code> faktisk leverer gyldig GPS-fix.</td></tr>
-        <tr><td><code>gps_logger.py</code></td><td>Logger rå GPS-punkter til SQLite og håndterer løpende punktopptak.</td></tr>
-        <tr><td><code>trip_builder.py</code></td><td>Bygger eller rebuild-er turer ut fra <code>gps_points</code>, deler turer ved gap/idle og filtrerer bort GPS-drift/støy.</td></tr>
-        <tr><td><code>export_gps.py</code></td><td>Eksporterer turene til repo-format som OpenClaw og andre lesere kan bruke.</td></tr>
-        <tr><td><code>render_trip_html.py</code></td><td>Rendrer hver gyldige tur som interaktiv HTML-side i <code>sr500maps</code>.</td></tr>
-        <tr><td><code>render_maps_index.py</code></td><td>Bygger <code>index.html</code> for kartrepoet og peker til tilgjengelige turer.</td></tr>
-        <tr><td><code>sync_exports.sh</code></td><td>Syncer eksportfiler inn i <code>sr500exports</code>, committer og pusher ved endringer.</td></tr>
-        <tr><td><code>sync_maps.sh</code></td><td>Syncer HTML-kart inn i <code>sr500maps</code>, committer og pusher ved endringer.</td></tr>
-        <tr><td><code>run_sync.sh</code></td><td>Wrapper som kjører rebuild, eksport, kart-rendering og GitHub-sync som én jobb.</td></tr>
-        <tr><td><code>prune_gps_db.py</code></td><td>Periodisk databasevedlikehold som fjerner gamle råpunkter, men beholder turmetadata og eksporthistorikk.</td></tr>
+        <tr><td><code>read_gps.py</code></td><td>Simple verification that <code>gpsd</code> is actually delivering valid GPS data.</td></tr>
+        <tr><td><code>gps_logger.py</code></td><td>Logs raw GPS points to SQLite.</td></tr>
+        <tr><td><code>trip_builder.py</code></td><td>Builds or rebuilds trips from <code>gps_points</code>, splits trips on gap/idle logic, and filters GPS drift-like noise.</td></tr>
+        <tr><td><code>export_gps.py</code></td><td>Exports repository-friendly trip files that OpenClaw and other readers can consume.</td></tr>
+        <tr><td><code>render_trip_html.py</code></td><td>Renders each valid trip as an interactive HTML page in <code>sr500maps</code>.</td></tr>
+        <tr><td><code>render_maps_index.py</code></td><td>Builds the map index page for the published map repository.</td></tr>
+        <tr><td><code>sync_exports.sh</code></td><td>Copies export files into <code>sr500exports</code>, commits, and pushes when needed.</td></tr>
+        <tr><td><code>sync_maps.sh</code></td><td>Copies rendered HTML into <code>sr500maps</code>, commits, and pushes when needed.</td></tr>
+        <tr><td><code>run_sync.sh</code></td><td>Runs rebuild, export, map rendering, and GitHub sync as one job.</td></tr>
+        <tr><td><code>prune_gps_db.py</code></td><td>Periodically removes old raw points while keeping trips and exported history intact.</td></tr>
       </tbody>
     </table>
 
-    <h2>5. Turlogikken</h2>
+    <h2>4. Trip logic</h2>
     <p>
-      Turene er ikke bare “alle punkter fortløpende”. Prosjektet bruker regler for å avgjøre hva som er en reell tur,
-      hva som er pause, og hva som bare er støy. Både <code>gps_logger.py</code> og <code>trip_builder.py</code> bruker
-      terskler fra <code>trip-config.env</code>.
+      Trips are not simply “all points in order”. The project uses configurable rules to decide what counts as a real trip,
+      what counts as an idle break, and what looks like GPS drift.
     </p>
     <ul>
-      <li>Ny tur kan startes når faktisk bevegelse gjenopptas.</li>
-      <li>Tur kan avsluttes ved mer enn 5 minutters datagap.</li>
-      <li>Tur kan også avsluttes ved omtrent 15 minutters lite bevegelse innen liten radius.</li>
-      <li>Støy-turer filtreres bort dersom de ser ut som GPS-drift: lav distanse, lang varighet, lav snittfart.</li>
+      <li>A new trip starts when real movement resumes.</li>
+      <li>A trip can end after a data gap longer than 5 minutes.</li>
+      <li>A trip can also end after roughly 15 minutes of low movement inside a small radius.</li>
+      <li>Noise-like trips are filtered out when they look like drift: low distance, long duration, low average speed.</li>
     </ul>
-    <p>Standard terskler inkluderer blant annet:</p>
+    <p>The main thresholds currently live in <code>/home/johnny/mc-gps/config/trip-config.env</code>:</p>
     <pre>TRIP_GAP_SECONDS=300
 TRIP_IDLE_SECONDS=900
 TRIP_IDLE_RADIUS_METERS=30
@@ -403,86 +366,67 @@ MIN_REAL_TRIP_DISTANCE_KM=1.0
 MIN_REAL_TRIP_AVG_SPEED_KMH=2.0
 MIN_REAL_TRIP_DURATION_SECONDS=600</pre>
 
-    <h2>6. Tidssoner og tidsvisning</h2>
-    <p>
-      Rådata lagres i <strong>UTC</strong> med <code>Z</code>-suffix, for eksempel i <code>latest.json</code>,
-      <code>summary.json</code>, GeoJSON og GPX. Det er bevisst og teknisk ryddig.
-    </p>
-    <p>
-      Visningslaget er derimot nå oppdatert til å presentere tidene i <strong>norsk lokal tid</strong>
-      (<code>Europe/Oslo</code>) i de publiserte HTML-kartene og kartindeksen. Det betyr i praksis:
-    </p>
-    <ul>
-      <li><strong>Lagring:</strong> UTC</li>
-      <li><strong>Presentasjon:</strong> norsk lokal tid (CET/CEST)</li>
-    </ul>
-
-    <h2>7. Repoene</h2>
+    <h2>5. Data and publishing repositories</h2>
     <div class="grid">
       <section class="card">
         <h3><code>sr500exports</code></h3>
-        <p>Inneholder eksporterte datafiler og dokumentasjon. Viktigste innhold:</p>
+        <p>The machine-readable trip repository used by agents and tools.</p>
         <ul>
-          <li><code>latest.json</code> – siste kjente posisjon</li>
-          <li><code>trips/trip-*.summary.json</code> – metadata for hver tur</li>
-          <li><code>trips/trip-*.geojson</code> – rute + punkter</li>
-          <li><code>trips/trip-*.gpx</code> – standard GPS-sporformat</li>
-          <li><code>scripts/prune_gps_db.py</code> – vedlikeholdsverktøy for databasen</li>
+          <li><code>latest.json</code> – latest known position</li>
+          <li><code>trips/trip-*.summary.json</code> – trip metadata</li>
+          <li><code>trips/trip-*.geojson</code> – route and points</li>
+          <li><code>trips/trip-*.gpx</code> – standard GPS exchange format</li>
+          <li><code>scripts/prune_gps_db.py</code> – database maintenance tool</li>
         </ul>
       </section>
       <section class="card">
         <h3><code>sr500maps</code></h3>
-        <p>Inneholder ferdigrendrede, publiserbare kartsider:</p>
+        <p>The public map repository and GitHub Pages surface.</p>
         <ul>
-          <li><code>index.html</code> – oversikt over publiserte turer</li>
-          <li><code>latest.html</code> – siste tur</li>
-          <li><code>trips/trip-&lt;trip_id&gt;.html</code> – individuelle kart</li>
-          <li><code>project-overview.html</code> – dette dokumentet</li>
+          <li><code>index.html</code> – published trip index</li>
+          <li><code>latest.html</code> – latest rendered trip</li>
+          <li><code>trips/trip-&lt;trip_id&gt;.html</code> – per-trip map pages</li>
+          <li><code>project-overview.html</code> – this overview page</li>
         </ul>
       </section>
     </div>
 
-    <h2>8. OpenClaw og agentene</h2>
+    <h2>6. Time handling</h2>
     <p>
-      OpenClaw er laget for å kunne lese prosjektet uten å være avhengig av driftstilstanden på Pi-en i hver eneste forespørsel.
-      Derfor er <code>sr500exports</code> og <code>sr500maps</code> viktige som stabile mellomlag.
+      Raw timestamps are stored in <strong>UTC</strong> with a <code>Z</code> suffix in <code>latest.json</code>, summaries,
+      GeoJSON, and GPX. That is intentional and keeps the stored data clean and consistent.
+    </p>
+    <p>
+      The human-facing map layer has been updated to display times in <strong>Europe/Oslo</strong>, so published HTML maps and the map index show local Norwegian time.
+    </p>
+    <ul>
+      <li><strong>Storage:</strong> UTC</li>
+      <li><strong>Presentation:</strong> Europe/Oslo (CET/CEST)</li>
+    </ul>
+
+    <h2>7. OpenClaw setup</h2>
+    <p>
+      OpenClaw runs locally with the gateway on the same machine as the main agent. The primary chat model is
+      <code>microsoft-foundry/gpt-5.4</code>, and the trip-focused sub-agent uses the same model. Memory search was moved to local
+      Ollama embeddings to keep recall local and more reliable.
     </p>
 
     <div class="grid">
       <section class="card">
-        <h3>Hovedagenten</h3>
-        <p>Har langtidsminne om prosjektet, kan gjøre operativ feilsøking, dokumentere beslutninger og hjelpe med vedlikehold.</p>
-      </section>
-      <section class="card">
-        <h3><code>trip-map-agent</code></h3>
-        <p>Spesialisert agent for å lese <code>sr500exports</code>-formatet, finne historiske turer, resolve siste tur og rendre kart.</p>
-        <p class="muted">Primær datakilde er workspace-klonen av <code>sr500exports</code>, med fallback til andre lokale kilder eller synthetic testdata.</p>
-      </section>
-    </div>
-
-    <h3>OpenClaw-konfig i dette oppsettet</h3>
-    <p>
-      OpenClaw kjører lokalt med gateway på samme maskin som hovedagenten. Hovedmodellen er satt til
-      <code>microsoft-foundry/gpt-5.4</code>, og <code>trip-map-agent</code> bruker samme modell. Websøk er aktivert via
-      DuckDuckGo-pluginen, og minnesøk er flyttet over til lokal Ollama-basert embedding for mer robust, lokal semantisk recall.
-    </p>
-
-    <div class="grid">
-      <section class="card">
-        <h3>Modeller</h3>
+        <h3>Models</h3>
         <ul>
-          <li><strong>Primær agentmodell:</strong> <code>microsoft-foundry/gpt-5.4</code></li>
-          <li><strong>Tilgjengelige agentmodeller:</strong> <code>microsoft-foundry/gpt-4o</code> og <code>microsoft-foundry/gpt-5.4</code></li>
-          <li><strong>Embedding / memory:</strong> Ollama med <code>nomic-embed-text</code></li>
+          <li><strong>Primary model:</strong> <code>microsoft-foundry/gpt-5.4</code></li>
+          <li><strong>Configured agent models:</strong> <code>microsoft-foundry/gpt-4o</code>, <code>microsoft-foundry/gpt-5.4</code></li>
+          <li><strong>Embedding model:</strong> <code>nomic-embed-text</code> through Ollama</li>
         </ul>
       </section>
       <section class="card">
-        <h3>Minne</h3>
+        <h3>Memory</h3>
         <ul>
           <li><strong>Provider:</strong> <code>ollama</code></li>
-          <li><strong>Modell:</strong> <code>nomic-embed-text</code></li>
+          <li><strong>Model:</strong> <code>nomic-embed-text</code></li>
           <li><strong>Fallback:</strong> <code>none</code></li>
-          <li><strong>Status:</strong> vektor-/semantisk søk er verifisert som fungerende</li>
+          <li><strong>Status:</strong> semantic/vector search is verified working</li>
         </ul>
       </section>
       <section class="card">
@@ -492,21 +436,47 @@ MIN_REAL_TRIP_DURATION_SECONDS=600</pre>
           <li><strong>Bind:</strong> <code>loopback</code></li>
           <li><strong>Port:</strong> <code>18789</code></li>
           <li><strong>Tailscale:</strong> <code>off</code></li>
-          <li><strong>Auth:</strong> token-basert</li>
+          <li><strong>Auth:</strong> token-based</li>
         </ul>
       </section>
       <section class="card">
-        <h3>Tools / plugins</h3>
+        <h3>Tools and plugins</h3>
         <ul>
-          <li><strong>Tool-profil:</strong> <code>coding</code></li>
-          <li><strong>Web search:</strong> DuckDuckGo aktivert</li>
+          <li><strong>Tool profile:</strong> <code>coding</code></li>
+          <li><strong>Web search:</strong> DuckDuckGo enabled</li>
           <li><strong>Plugins:</strong> <code>duckduckgo</code>, <code>microsoft-foundry</code></li>
-          <li><strong>Telegram-kanal:</strong> aktivert i config</li>
+          <li><strong>Telegram channel:</strong> configured in OpenClaw</li>
         </ul>
       </section>
     </div>
 
-    <p>Agenten kan typisk håndtere:</p>
+    <div class="note">
+      <strong>Why the memory setup matters here:</strong> memory recall had become fragile enough that project context did not always come back when needed.
+      The fix was to switch embeddings to local Ollama, pull <code>nomic-embed-text</code>, and reindex the main agent's memory.
+      That restored local recall for facts about the Pi, repositories, services, and the SR500 architecture.
+    </div>
+
+    <h2>8. Agents and responsibilities</h2>
+    <div class="grid">
+      <section class="card">
+        <h3>System owner</h3>
+        <p>Johnny owns the machine, repositories, publishing surfaces, and the overall direction of the project.</p>
+      </section>
+      <section class="card">
+        <h3>Responsible architect</h3>
+        <p>The OpenClaw main agent acts as the responsible architect for this solution and has designed, implemented, and evolved large parts of the pipeline logic, agent setup, documentation, and integration between the Pi, the repositories, and OpenClaw.</p>
+      </section>
+      <section class="card">
+        <h3>Specialized agent</h3>
+        <p><code>trip-map-agent</code> is the focused read/presentation agent for trip and map requests, built on top of the architecture and data layers maintained by the main agent.</p>
+      </section>
+      <section class="card">
+        <h3>Runtime producer</h3>
+        <p>The Raspberry Pi <code>SR500</code> is the operational producer that collects GPS data, builds trips, exports files, and publishes maps.</p>
+      </section>
+    </div>
+
+    <p>Typical <code>trip-map-agent</code> requests include:</p>
     <ul>
       <li><code>list trips</code></li>
       <li><code>show latest trip</code></li>
@@ -515,34 +485,7 @@ MIN_REAL_TRIP_DURATION_SECONDS=600</pre>
       <li><code>render trip 2026-05-16T11-56-51Z as image</code></li>
     </ul>
 
-    <div class="note">
-      <strong>Hvorfor minneoppsettet betyr noe her:</strong> OpenClaw-minnet var tidligere skjørt nok til at prosjektkontekst ikke alltid
-      kom tilbake ved behov. Det ble reparert ved å bytte embedding-provider til lokal Ollama, trekke modellen
-      <code>nomic-embed-text</code>, og reindeksere hovedagentens minne. Dermed kan prosjektfakta om Pi, repoer, tjenester og agentoppsett
-      gjenfinnes lokalt uten skyavhengighet.
-    </div>
-
-    <h2>9. Ansvar og eierskap</h2>
-    <div class="grid">
-      <section class="card">
-        <h3>Systemeier</h3>
-        <p>Johnny er systemeier og den som eier maskinen, repoene, publiseringsflatene og de overordnede prioriteringene.</p>
-      </section>
-      <section class="card">
-        <h3>Ansvarlig arkitekt</h3>
-        <p>OpenClaw-hovedagenten fungerer som ansvarlig arkitekt for løsningen og har designet, implementert og videreutviklet store deler av pipeline-logikken, agentoppsettet, dokumentasjonen og koblingen mellom Pi, repoene og OpenClaw.</p>
-      </section>
-      <section class="card">
-        <h3>Spesialisert agent</h3>
-        <p><code>trip-map-agent</code> er den dedikerte leser-/presentasjonsagenten for turdata og kart, men bygger på arkitekturen og datalagene hovedagenten holder sammen.</p>
-      </section>
-      <section class="card">
-        <h3>Runtime / produsent</h3>
-        <p>Raspberry Pi-en <code>SR500</code> er den operative produsenten som samler GPS-data, bygger turer, eksporterer filer og publiserer kart.</p>
-      </section>
-    </div>
-
-    <h2>10. Automatisering og systemd</h2>
+    <h2>9. Automation and maintenance</h2>
     <pre>/home/johnny/.config/systemd/user/
 ├── gps-logger.service
 ├── gps-sync.service
@@ -552,42 +495,42 @@ MIN_REAL_TRIP_DURATION_SECONDS=600</pre>
 
     <table>
       <thead>
-        <tr><th>Unit</th><th>Ansvar</th></tr>
+        <tr><th>Unit</th><th>Role</th></tr>
       </thead>
       <tbody>
-        <tr><td><code>gps-logger.service</code></td><td>Kontinuerlig logging av GPS-punkter.</td></tr>
-        <tr><td><code>gps-sync.service</code></td><td>Kjører eksport-, kart- og sync-pipelinen.</td></tr>
-        <tr><td><code>gps-sync.timer</code></td><td>Starter sync-jobben 2 minutter etter boot og deretter hvert 15. minutt.</td></tr>
-        <tr><td><code>gps-prune.service</code></td><td>Kjører database-prune med retention-vindu på 90 dager.</td></tr>
-        <tr><td><code>gps-prune.timer</code></td><td>Kjører prune månedlig, med catch-up etter boot.</td></tr>
+        <tr><td><code>gps-logger.service</code></td><td>Continuous GPS logging.</td></tr>
+        <tr><td><code>gps-sync.service</code></td><td>Runs the export, map, and sync pipeline.</td></tr>
+        <tr><td><code>gps-sync.timer</code></td><td>Runs the sync job 2 minutes after boot and then every 15 minutes.</td></tr>
+        <tr><td><code>gps-prune.service</code></td><td>Runs database pruning with a 90-day retention window.</td></tr>
+        <tr><td><code>gps-prune.timer</code></td><td>Runs prune monthly, with catch-up after boot.</td></tr>
       </tbody>
     </table>
 
-    <h2>11. Hvorfor dette oppsettet er smart</h2>
+    <h2>10. Why this architecture works</h2>
     <ul>
-      <li>Pi-en gjør tungt arbeid lokalt der GPS-en faktisk er.</li>
-      <li>Repoene fungerer som ryddige, versjonerte og delbare grensesnitt.</li>
-      <li>OpenClaw-agentene kan lese historikk uten å være tett koblet til live-runtime.</li>
-      <li>GitHub Pages gir en enkel, robust publiseringsflate for interaktive kart.</li>
-      <li>UTC i rådata + lokal tid i presentasjon gir både teknisk orden og menneskelig riktig visning.</li>
+      <li>The Pi does the heavy operational work where the GPS hardware actually is.</li>
+      <li>The repositories act as clean, versioned, shareable interfaces.</li>
+      <li>OpenClaw agents can read history and state without depending on live SSH access for ordinary queries.</li>
+      <li>GitHub Pages provides a simple and robust publishing surface for interactive maps.</li>
+      <li>UTC in stored data plus local time in presentation gives both technical consistency and human-friendly output.</li>
     </ul>
 
-    <h2>12. Nåværende begrensninger</h2>
+    <h2>11. Current limitations</h2>
     <ul>
-      <li>Turlogikken er heuristisk og vil fortsatt måtte finjusteres mot reelle kjøreturer.</li>
-      <li>Eksportstrukturen bruker fortsatt flat <code>trips/</code>-mappe.</li>
-      <li>Render-/sync-script ligger i runtime-miljøet på Pi-en og er ikke fullt samlet i ett eget kode-repo.</li>
-      <li>Agentflyten er god, men kan bli enda tydeligere rundt valg mellom bilde, lenke, HTML og GPX.</li>
+      <li>The trip logic is still heuristic and will continue to need tuning against real rides.</li>
+      <li>The export structure still uses a flat <code>trips/</code> directory.</li>
+      <li>Some operational scripts still live in the Pi runtime environment rather than in a dedicated code repository.</li>
+      <li>The agent experience can still improve around clearer choice between image, link, HTML, and GPX delivery.</li>
     </ul>
 
-    <h2>13. Oppsummert</h2>
+    <h2>12. Summary</h2>
     <p>
-      Hele systemet kan forstås som en kjede:
-      <strong>GPS-dongle → Pi/runtime → SQLite → turbygging → eksportrepo → kartrepo → OpenClaw-agenter → chat/visning</strong>.
-      Hver del har én tydelig jobb, og de er koblet sammen på en måte som gjør både drift, historikk og presentasjon håndterbar.
+      The system can be understood as one chain:
+      <strong>GPS device → Pi runtime → SQLite → trip building → export repo → map repo → OpenClaw agents → chat/UI</strong>.
+      Each layer has a clear role, and together they make the project operable, searchable, and easy to present.
     </p>
     <p class="muted">
-      Denne siden er lagt i kartrepoet som praktisk systemdokumentasjon, selv om den er bredere enn bare kartpublisering.
+      This page lives in the map repository as practical architecture documentation, even though its scope is wider than maps alone.
     </p>
   </div>
 </body>
