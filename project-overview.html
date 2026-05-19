@@ -116,6 +116,53 @@
       border-left-color: var(--accent2);
       background: rgba(134,239,172,0.08);
     }
+    .arch {
+      display: grid;
+      gap: 12px;
+      margin: 18px 0 8px;
+    }
+    .arch-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      align-items: stretch;
+    }
+    .arch-box {
+      background: linear-gradient(180deg, rgba(125,211,252,0.08), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 16px;
+      position: relative;
+      min-height: 110px;
+    }
+    .arch-box h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1rem;
+    }
+    .arch-box p {
+      margin: 0;
+      color: #dbe4ee;
+      font-size: 0.95rem;
+    }
+    .arch-arrow {
+      text-align: center;
+      color: var(--muted);
+      font-size: 1.4rem;
+      line-height: 1;
+      margin: -2px 0;
+    }
+    .arch-split {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+    .arch-merge {
+      text-align: center;
+      color: var(--muted);
+      font-size: 1.2rem;
+      align-self: center;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -167,7 +214,61 @@
       </section>
     </div>
 
-    <h2>1. Hovedidé</h2>
+    <h2>1. Konseptuell arkitektur</h2>
+    <div class="arch">
+      <div class="arch-row">
+        <div class="arch-box">
+          <h3>Motorsykkel / GPS</h3>
+          <p>u-blox 7 leverer posisjon via <code>gpsd</code>. Dette er den fysiske kilden til hele datastrømmen.</p>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-row">
+        <div class="arch-box">
+          <h3>Raspberry Pi «SR500»</h3>
+          <p><code>/home/johnny/mc-gps/</code> kjører logging, turbygging, eksport, kart-rendering, sync og database-prune.</p>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-split">
+        <div class="arch-box">
+          <h3><code>sr500exports</code></h3>
+          <p>Repoformat for <code>latest.json</code>, tur-sammendrag, GeoJSON og GPX. Dette er hovedflaten agenter leser fra.</p>
+        </div>
+        <div class="arch-merge">＋</div>
+        <div class="arch-box">
+          <h3><code>sr500maps</code></h3>
+          <p>Publiserte HTML-kart og indeks. Dette er presentasjonslaget for interaktive kart.</p>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-row">
+        <div class="arch-box">
+          <h3>GitHub / GitHub Pages</h3>
+          <p>Repoene pushes fra Pi-en. Kartrepoet serveres som statisk nettsted via GitHub Pages.</p>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-row">
+        <div class="arch-box">
+          <h3>OpenClaw</h3>
+          <p>Hovedagenten og <code>trip-map-agent</code> leser repo-formatet, bruker minne og verktøy, og unngår direkte Pi-kobling for vanlige forespørsler.</p>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-row">
+        <div class="arch-box">
+          <h3>Chat / Control UI</h3>
+          <p>Brukeren får svar som tekst, bilde, lenke eller HTML-avledet visning, avhengig av flate og behov.</p>
+        </div>
+      </div>
+    </div>
+    <p>
+      Blokken over viser hovedideen i prosjektet: Pi-en gjør innsamling, prosessering og publisering,
+      mens OpenClaw leser fra stabile repo-/publiseringsflater og presenterer resultatet i chat eller UI.
+    </p>
+
+    <h2>2. Hovedidé</h2>
     <p>
       Motorsykkelen har ikke en chat-agent direkte koblet til seg hele tiden. I stedet samler Pi-en inn GPS-data,
       bygger turer, eksporterer dem til repo-format, og publiserer kart. OpenClaw leser deretter disse eksporterte,
