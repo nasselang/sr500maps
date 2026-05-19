@@ -335,6 +335,52 @@ MIN_REAL_TRIP_DURATION_SECONDS=600</pre>
       </section>
     </div>
 
+    <h3>OpenClaw-konfig i dette oppsettet</h3>
+    <p>
+      OpenClaw kjører lokalt med gateway på samme maskin som hovedagenten. Hovedmodellen er satt til
+      <code>microsoft-foundry/gpt-5.4</code>, og <code>trip-map-agent</code> bruker samme modell. Websøk er aktivert via
+      DuckDuckGo-pluginen, og minnesøk er flyttet over til lokal Ollama-basert embedding for mer robust, lokal semantisk recall.
+    </p>
+
+    <div class="grid">
+      <section class="card">
+        <h3>Modeller</h3>
+        <ul>
+          <li><strong>Primær agentmodell:</strong> <code>microsoft-foundry/gpt-5.4</code></li>
+          <li><strong>Tilgjengelige agentmodeller:</strong> <code>microsoft-foundry/gpt-4o</code> og <code>microsoft-foundry/gpt-5.4</code></li>
+          <li><strong>Embedding / memory:</strong> Ollama med <code>nomic-embed-text</code></li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>Minne</h3>
+        <ul>
+          <li><strong>Provider:</strong> <code>ollama</code></li>
+          <li><strong>Modell:</strong> <code>nomic-embed-text</code></li>
+          <li><strong>Fallback:</strong> <code>none</code></li>
+          <li><strong>Status:</strong> vektor-/semantisk søk er verifisert som fungerende</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>Gateway</h3>
+        <ul>
+          <li><strong>Mode:</strong> <code>local</code></li>
+          <li><strong>Bind:</strong> <code>loopback</code></li>
+          <li><strong>Port:</strong> <code>18789</code></li>
+          <li><strong>Tailscale:</strong> <code>off</code></li>
+          <li><strong>Auth:</strong> token-basert</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>Tools / plugins</h3>
+        <ul>
+          <li><strong>Tool-profil:</strong> <code>coding</code></li>
+          <li><strong>Web search:</strong> DuckDuckGo aktivert</li>
+          <li><strong>Plugins:</strong> <code>duckduckgo</code>, <code>microsoft-foundry</code></li>
+          <li><strong>Telegram-kanal:</strong> aktivert i config</li>
+        </ul>
+      </section>
+    </div>
+
     <p>Agenten kan typisk håndtere:</p>
     <ul>
       <li><code>list trips</code></li>
@@ -343,6 +389,13 @@ MIN_REAL_TRIP_DURATION_SECONDS=600</pre>
       <li><code>render latest trip as link</code></li>
       <li><code>render trip 2026-05-16T11-56-51Z as image</code></li>
     </ul>
+
+    <div class="note">
+      <strong>Hvorfor minneoppsettet betyr noe her:</strong> OpenClaw-minnet var tidligere skjørt nok til at prosjektkontekst ikke alltid
+      kom tilbake ved behov. Det ble reparert ved å bytte embedding-provider til lokal Ollama, trekke modellen
+      <code>nomic-embed-text</code>, og reindeksere hovedagentens minne. Dermed kan prosjektfakta om Pi, repoer, tjenester og agentoppsett
+      gjenfinnes lokalt uten skyavhengighet.
+    </div>
 
     <h2>9. Automatisering og systemd</h2>
     <pre>/home/johnny/.config/systemd/user/
