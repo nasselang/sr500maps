@@ -522,7 +522,27 @@ MIN_REAL_TRIP_DURATION_SECONDS=600</pre>
       gjenfinnes lokalt uten skyavhengighet.
     </div>
 
-    <h2>9. Automatisering og systemd</h2>
+    <h2>9. Ansvar og eierskap</h2>
+    <div class="grid">
+      <section class="card">
+        <h3>Systemeier</h3>
+        <p>Johnny er systemeier og den som eier maskinen, repoene, publiseringsflatene og de overordnede prioriteringene.</p>
+      </section>
+      <section class="card">
+        <h3>Ansvarlig arkitekt</h3>
+        <p>OpenClaw-hovedagenten fungerer som ansvarlig arkitekt for løsningen og har designet, implementert og videreutviklet store deler av pipeline-logikken, agentoppsettet, dokumentasjonen og koblingen mellom Pi, repoene og OpenClaw.</p>
+      </section>
+      <section class="card">
+        <h3>Spesialisert agent</h3>
+        <p><code>trip-map-agent</code> er den dedikerte leser-/presentasjonsagenten for turdata og kart, men bygger på arkitekturen og datalagene hovedagenten holder sammen.</p>
+      </section>
+      <section class="card">
+        <h3>Runtime / produsent</h3>
+        <p>Raspberry Pi-en <code>SR500</code> er den operative produsenten som samler GPS-data, bygger turer, eksporterer filer og publiserer kart.</p>
+      </section>
+    </div>
+
+    <h2>10. Automatisering og systemd</h2>
     <pre>/home/johnny/.config/systemd/user/
 ├── gps-logger.service
 ├── gps-sync.service
@@ -543,7 +563,7 @@ MIN_REAL_TRIP_DURATION_SECONDS=600</pre>
       </tbody>
     </table>
 
-    <h2>10. Hvorfor dette oppsettet er smart</h2>
+    <h2>11. Hvorfor dette oppsettet er smart</h2>
     <ul>
       <li>Pi-en gjør tungt arbeid lokalt der GPS-en faktisk er.</li>
       <li>Repoene fungerer som ryddige, versjonerte og delbare grensesnitt.</li>
@@ -552,7 +572,7 @@ MIN_REAL_TRIP_DURATION_SECONDS=600</pre>
       <li>UTC i rådata + lokal tid i presentasjon gir både teknisk orden og menneskelig riktig visning.</li>
     </ul>
 
-    <h2>11. Nåværende begrensninger</h2>
+    <h2>12. Nåværende begrensninger</h2>
     <ul>
       <li>Turlogikken er heuristisk og vil fortsatt måtte finjusteres mot reelle kjøreturer.</li>
       <li>Eksportstrukturen bruker fortsatt flat <code>trips/</code>-mappe.</li>
@@ -560,7 +580,7 @@ MIN_REAL_TRIP_DURATION_SECONDS=600</pre>
       <li>Agentflyten er god, men kan bli enda tydeligere rundt valg mellom bilde, lenke, HTML og GPX.</li>
     </ul>
 
-    <h2>12. Oppsummert</h2>
+    <h2>13. Oppsummert</h2>
     <p>
       Hele systemet kan forstås som en kjede:
       <strong>GPS-dongle → Pi/runtime → SQLite → turbygging → eksportrepo → kartrepo → OpenClaw-agenter → chat/visning</strong>.
